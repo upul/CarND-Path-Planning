@@ -140,7 +140,18 @@ My path planning approach has based the method presented in the Q and A video. S
 
 ### **How did I address speed limit constraint?**
 
-According to the project specification, the maximum allowable speed is 50 km/h. So the car is started at 0 km/h  and increase its speed by 0.224 at each time step. However, when we increase the speed, the maximum limit is also checked. If we start the car with a speed which is close to 50 km/h, we will experience some jerk. So started at 0 km/h helps to eliminate that issue as well.
+According to the project specification, the maximum allowable speed is 50 km/h. So the car is started at 0 km/h  and increase its speed by 0.224 at each time step. However, when we increase the speed, the maximum limit is also checked. If we start the car with a speed which is close to 50 km/h, we will experience some jerk. So started at 0 km/h helps to eliminate that issue as well. Following code snippt shows how speed limit constraint is implemented in C++ code.
+
+```python
+if (too_close) {
+    ref_vel -= 0.224;
+    ...
+
+} else if (ref_vel < 49.5) {
+    ref_vel += 0.224;
+    ...
+}
+```
 
 ### **How did I detect the collision and overcome it?**
 
