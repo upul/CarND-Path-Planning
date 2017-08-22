@@ -180,7 +180,18 @@ if (too_close) {
 }
 ```
 
-### **Jerk Minimization using Spline Library**
+### **Generating smooth trajectories using Cubic Spline interpolation.**
+We used a cubic spline interpolation library for generating jerk free smooth trajectories. In this section, we describe our trajectory generation procedure.
+
+In order to generate smooth trajectories, spline library needs some data points. We use 5 points (as described below) as input to initialize spline. Then initialized spline is used for generating points for our trajectory generations.
+
+Following 5 points are used to initialize spline.
+1. Last two points from the trajectory generated in the last time step.
+2. Additional three points at 30m, 60m, and 90m distances from our car in a given lane. For instance, following code snippet shows how to calculate a point at a 30m distance.
+
+```python
+vector<double> next_wp0 = getXY(car_s + 30, (2 + 4 * lane), map_waypoints_s, map_waypoints_x, map_waypoints_y);
+```
 
 ### **Basic Lane Changing Algorithm**
 For lane changing, I developed a simple lane changing algorithm as described below.
