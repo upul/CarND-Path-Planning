@@ -138,15 +138,54 @@ still be compilable with cmake and make./
 # Reflection
 My path planning approach has based the method presented in the Q and A video. So in this section, I'm going to discuss how I addressed criteria given in the project specification document.
 
-1. **How did I address speed limit constraint?**
+### **How did I address speed limit constraint?**
 
 According to the project specification, the maximum allowable speed is 50 km/h. So the car is started at 0 km/h  and increase its speed by 0.224 at each time step. However, when we increase the speed, the maximum limit is also checked. If we start the car with a speed which is close to 50 km/h, we will experience some jerk. So started at 0 km/h helps to eliminate that issue as well.
 
-2. **How did I detect the collision and overcome it?**
+### **How did I detect the collision and overcome it?**
 
 The sensor module provides us localization information about all the cars on our side of the highway. From this information 
 
-3. **Jerk Minimization using Spline Library**
+### **Jerk Minimization using Spline Library**
 
-4. **Basic Lane Changing Algorithm**
-For lane changing, we developed a simple lane changing algorithm as described below.
+### **Basic Lane Changing Algorithm**
+For lane changing, I developed a simple lane changing algorithm as described below.
+
+As the initial step, we initialized an array of boolean variables and which is used to keep track of candidate lane we might consider for lane changing.
+
+```python
+vector<bool> candidateLane = {true, true, true};
+candidateLane[lane] = false;
+```
+
+Next, inside the loop which is used to explore senor data following `if-else` condition is used to filtered out dis-qualified lanes.
+```python
+for (int i = 0; i < sensor_fusion.size(); i++) {
+    ....
+    if ((check_car_lane != lane) && (check_car_s > car_s) && (check_car_s - car_s) < 30.0) {
+        candidateLane[check_car_lane] = false;
+        
+    } else if ((check_car_lane != lane) && (check_car_s < car_s) && (car_s - check_car_s) < 20.0) {
+        candidateLane[check_car_lane] = false;
+        
+    }
+    ....
+}
+```
+
+Above `if` condition checks vehicles which are on other lanes and distnace from our vehicle to that vehicle is less than 30m, we dis-qualified that lane. Similarly, in the `else if` condition, we dis-qualified lanes which has vehicles and the distance from our vehicle to thse vehicles is less than 20m.
+
+Finally, if our vehicle is too close to an other vehicle, we activate our lane changing logic and if we have an qulified candidate lane we will perform a lane shifting operation.
+
+```python
+if (too_close) {
+    ....
+     for (int i = 0; i < 3; i++) {
+         if (candidateLane[i] && isJerkLessShift(lane, i)) {
+             lane = i;
+         }
+     }
+    ....
+}
+```
+
