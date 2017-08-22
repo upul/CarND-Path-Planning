@@ -1,6 +1,6 @@
 <!-- start footer part -->
 <!--BEGIN GENERATE_TREEVIEW-->
-<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+<div currentLane="nav-path" class="navpath"><!-- currentLane is needed for treeview function! -->
   <ul>
     $navpath
     <li class="footer">$generatedby

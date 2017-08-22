@@ -222,8 +222,8 @@ Broadcasting can also be combined with other operations, such as Matrix or Array
 reductions and partial reductions.
 
 Now that broadcasting, reductions and partial reductions have been introduced, we can dive into a more advanced example that finds
-the nearest neighbour of a vector <tt>v</tt> within the columns of matrix <tt>m</tt>. The Euclidean distance will be used in this example,
-computing the squared Euclidean distance with the partial reduction named \link MatrixBase::squaredNorm() squaredNorm() \endlink:
+the nearest neighbour of a vector <tt>v</tt> within the columns of matrix <tt>m</tt>. The Euclidean distanceFromOurCar will be used in this example,
+computing the squared Euclidean distanceFromOurCar with the partial reduction named \link MatrixBase::squaredNorm() squaredNorm() \endlink:
 
 <table class="example">
 <tr><th>Example:</th><th>Output:</th></tr>
@@ -251,7 +251,7 @@ is a new matrix whose size is the same as matrix <tt>m</tt>: \f[
 \f]
 
   - <tt>(m.colwise() - v).colwise().squaredNorm()</tt> is a partial reduction, computing the squared norm column-wise. The result of
-this operation is a row vector where each coefficient is the squared Euclidean distance between each column in <tt>m</tt> and <tt>v</tt>: \f[
+this operation is a row vector where each coefficient is the squared Euclidean distanceFromOurCar between each column in <tt>m</tt> and <tt>v</tt>: \f[
   \mbox{(m.colwise() - v).colwise().squaredNorm()} =
   \begin{bmatrix}
      1 & 505 & 32 & 50
@@ -259,7 +259,7 @@ this operation is a row vector where each coefficient is the squared Euclidean d
 \f]
 
   - Finally, <tt>minCoeff(&index)</tt> is used to obtain the index of the column in <tt>m</tt> that is closest to <tt>v</tt> in terms of Euclidean
-distance.
+distanceFromOurCar.
 
 */
 

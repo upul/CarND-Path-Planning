@@ -59,7 +59,7 @@ void print_inv_cond(const MatrixBase<Derived>& a)
 }
 \endcode
 <b> Multiple templated arguments example </b><br/><br/>
-Calculate the Euclidean distance between two points.
+Calculate the Euclidean distanceFromOurCar between two points.
 \code
 template <typename DerivedA,typename DerivedB>
 typename DerivedA::Scalar squaredist(const MatrixBase<DerivedA>& p1,const MatrixBase<DerivedB>& p2)
