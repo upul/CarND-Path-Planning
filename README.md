@@ -188,4 +188,4 @@ if (too_close) {
     ....
 }
 ```
-
+Above lane shifting logic is self-explanatory. But, it is worth to look at `isJerkLessShift(current_lane, candidate_lane)` method. 
