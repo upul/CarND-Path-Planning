@@ -188,4 +188,22 @@ if (too_close) {
     ....
 }
 ```
-Above lane shifting logic is self-explanatory. But, it is worth to look at `isJerkLessShift(current_lane, candidate_lane)` method. 
+Above lane shifting logic is self-explanatory. But, it is worth to look at `isJerkLessShift(current_lane, candidate_lane)` method. Actually, lean changing will work even without `isJerkLessShift()` method. However, sometimes it will lead to jerk. For instance, consider our car on lane 0 and there is a car in front of us. So we need to shit lane and we have identified that lane 2 is free of obstacles. However, if we instantaneously move from lane 0 to 2, our passengers will experience some bad jerk. So `isJerkLessShift()` is responsible for identifying these moves. Follwong code shows the complete implementation of the `isJerkLessShift()` method.
+
+```python
+bool isJerkLessShift(int currentLane, int proposedLane) {
+    if (currentLane == 0 && proposedLane == 1) {
+        return true;
+    }
+
+    if (currentLane == 1 && (proposedLane == 0 || proposedLane == 2)) {
+        return true;
+    }
+
+    if (currentLane == 2 && proposedLane == 1) {
+        return true;
+    }
+
+    return false;
+}
+```
