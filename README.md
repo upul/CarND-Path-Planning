@@ -155,7 +155,7 @@ if (too_close) {
 
 ### **How did I detect the collision and overcome it?**
 
-From sensor data, we calculate other vehicles' `speed', 'distance' from our vehicle and 's coordinates. From these three information we identify vehicles which are moving close to us on the same lane. If we managed to find out one or more such vehicles we set `too_close` flag to 'true'. Finally, just after the sensor data exploration `for` lool, we reduce the speed of our vehicle if it is moving very close to other vehicle(s).
+From sensor data, we calculate other vehicles' `speed`, `distance` from our vehicle and `s` coordinates. From these three information we identify vehicles which are moving close to us on the same lane. If we managed to find out one or more such vehicles we set `too_close` flag to 'true'. Finally, just after the sensor data exploration `for` lool, we reduce the speed of our vehicle if it is moving very close to other vehicle(s).
 
 ```python
 for (int i = 0; i < sensor_fusion.size(); i++) {
