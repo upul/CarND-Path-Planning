@@ -134,3 +134,19 @@ that's just a guess.
 
 One last note here: regardless of the IDE used, every submitted project must
 still be compilable with cmake and make./
+
+# Reflection
+My path planning approach has based the method presented in the Q and A video. So in this section, I'm going to discuss how I addressed criteria given in the project specification document.
+
+1. **How did I address speed limit constraint?**
+
+According to the project specification, the maximum allowable speed is 50 km/h. So the car is started at 0 km/h  and increase its speed by 0.224 at each time step. However, when we increase the speed, the maximum limit is also checked. If we start the car with a speed which is close to 50 km/h, we will experience some jerk. So started at 0 km/h helps to eliminate that issue as well.
+
+2. **How did I detect the collision and overcome it?**
+
+The sensor module provides us localization information about all the cars on our side of the highway. From this information 
+
+3. **Jerk Minimization using Spline Library**
+
+4. **Basic Lane Changing Algorithm**
+For lane changing, we developed a simple lane changing algorithm as described below.
