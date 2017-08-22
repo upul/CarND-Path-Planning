@@ -155,7 +155,30 @@ if (too_close) {
 
 ### **How did I detect the collision and overcome it?**
 
-The sensor module provides us localization information about all the cars on our side of the highway. From this information 
+From sensor data, we calculate other vehicles' `speed', 'distance' from our vehicle and 's coordinates. From these three information we identify vehicles which are moving close to us on the same lane. If we managed to find out one or more such vehicles we set `too_close` flag to 'true'. Finally, just after the sensor data exploration `for` lool, we reduce the speed of our vehicle if it is moving very close to other vehicle(s).
+
+```python
+for (int i = 0; i < sensor_fusion.size(); i++) {
+    ....
+    double check_speed = sqrt(vx * vx + vy * vy);
+    double check_car_s = sensor_fusion[i][5];
+    int check_car_lane = getLaneNumber(d)
+    ....
+    check_car_s += (double) prev_size * 0.02 * check_speed;
+    if ((check_car_lane == lane) && (check_car_s > car_s) && ((check_car_s - car_s) < 30)) {
+        too_close = true;
+    }
+    ...
+}
+
+if (too_close) {
+    ref_vel -= 0.224;
+    ...
+} else if (ref_vel < 49.5) {
+    ref_vel += 0.224;
+    ....
+}
+```
 
 ### **Jerk Minimization using Spline Library**
 
