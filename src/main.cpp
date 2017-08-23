@@ -55,21 +55,17 @@ int getLaneNumber(double d) {
 
 bool isJerkLessShift(int currentLane, int proposedLane) {
     if (currentLane == 0 && proposedLane == 1) {
-        cout << "C: " << currentLane << " P: " << proposedLane << " JM" << endl;
         return true;
     }
 
     if (currentLane == 1 && (proposedLane == 0 || proposedLane == 2)) {
-        cout << "C: " << currentLane << " P: " << proposedLane << " JM" << endl;
         return true;
     }
 
     if (currentLane == 2 && proposedLane == 1) {
-        cout << "C: " << currentLane << " P: " << proposedLane << " JM" << endl;
         return true;
     }
 
-    cout << "C: " << currentLane << " P: " << proposedLane << " J" << endl;
     return false;
 }
 
@@ -225,10 +221,11 @@ int main() {
 
     // have a reference velocity
     double ref_vel = 0.0;
+    long num_units_in_current_lane = 0;
 
 
     h.onMessage(
-            [&ref_vel, &map_waypoints_x, &map_waypoints_y, &map_waypoints_s, &map_waypoints_dx, &map_waypoints_dy, &lane](
+            [&ref_vel, &map_waypoints_x, &map_waypoints_y, &map_waypoints_s, &map_waypoints_dx, &map_waypoints_dy, &lane, &num_units_in_current_lane](
                     uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
                     uWS::OpCode opCode) {
                 // "42" at the start of the message means there's a websocket message event.
@@ -274,6 +271,7 @@ int main() {
                             bool too_close = false;
                             vector<bool> candidateLane = {true, true, true};
                             candidateLane[lane] = false;
+                            num_units_in_current_lane += 1;
 
                             for (int i = 0; i < sensor_fusion.size(); i++) {
                                 float d = sensor_fusion[i][6];
@@ -302,12 +300,13 @@ int main() {
                                 ref_vel -= 0.224;
 
                                 for (int i = 0; i < 3; i++) {
-                                    if (candidateLane[i] && isJerkLessShift(lane, i)) {
+                                    if (candidateLane[i] && isJerkLessShift(lane, i) && (num_units_in_current_lane > 10)) {
                                         lane = i;
+                                        num_units_in_current_lane = 0;
                                     }
                                 }
 
-                            } else if (ref_vel < 49.5) {
+                            } else if (ref_vel < 48.0) {
                                 ref_vel += 0.224;
 
                             }
