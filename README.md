@@ -190,7 +190,8 @@ Following 5 points are used to initialize spline.
 2. Additional three points at 30m, 60m, and 90m distances from our car in a given lane. For instance, following code snippet shows how to calculate a point at a 30m distance.
 
 ```python
-vector<double> next_wp0 = getXY(car_s + 30, (2 + 4 * lane), map_waypoints_s, map_waypoints_x, map_waypoints_y);
+vector<double> next_wp0 = getXY(car_s + 30, 
+                                (2 + 4 * lane), map_waypoints_s, map_waypoints_x, map_waypoints_y);
 ```
 
 ### **Basic Lane Changing Algorithm**
@@ -226,14 +227,14 @@ Finally, if our vehicle is too close to an other vehicle, we activate our lane c
 if (too_close) {
     ....
      for (int i = 0; i < 3; i++) {
-         if (candidateLane[i] && isJerkLessShift(lane, i)) {
+         if (candidateLane[i] && isJerkLessShift(lane, i) && (num_units_in_current_lane > 10)) {
              lane = i;
          }
      }
     ....
 }
 ```
-Above lane shifting logic is self-explanatory. But, it is worth to look at `isJerkLessShift(current_lane, candidate_lane)` method. Actually, lean changing will work even without `isJerkLessShift()` method. However, sometimes it will lead to jerk. For instance, consider our car on lane 0 and there is a car in front of us. So we need to shit lane and we have identified that lane 2 is free of obstacles. However, if we instantaneously move from lane 0 to 2, our passengers will experience some bad jerk. So `isJerkLessShift()` is responsible for identifying these moves. Follwong code shows the complete implementation of the `isJerkLessShift()` method.
+Above lane shifting logic is self-explanatory. But, it is worth to look at `isJerkLessShift(current_lane, candidate_lane)` method. Actually, lean changing will work even without `isJerkLessShift()` method. However, sometimes it will lead to jerk. For instance, consider our car on lane 0 and there is a car in front of us. So we need to shit lane and we have identified that lane 2 is free of obstacles. However, if we instantaneously move from lane 0 to 2, our passengers will experience some bad jerk. So `isJerkLessShift()` is responsible for identifying these moves. Follwong code shows the complete implementation of the `isJerkLessShift()` method. Also, it is worth to node that `(num_units_in_current_lane > 10)` is used to discourage rapid lane changing. 
 
 ```python
 bool isJerkLessShift(int currentLane, int proposedLane) {
