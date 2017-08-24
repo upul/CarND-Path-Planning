@@ -257,7 +257,7 @@ bool isJerkLessShift(int currentLane, int proposedLane) {
 Following youtube video shows how our algorithm runs in the simulator.
 
 <p align="center">
-    <a href="https://www.youtube.com/watch?v=yPeauhM8g6c">
-        <img src="https://img.youtube.com/vi/yPeauhM8g6c/0.jpg" alt="video output">
+    <a href="https://www.youtube.com/watch?v=4tSDm6LY3ow">
+        <img src="https://img.youtube.com/vi/4tSDm6LY3ow/0.jpg" alt="video output">
     </a>
 </p>
